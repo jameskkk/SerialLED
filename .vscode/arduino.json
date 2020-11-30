@@ -1,0 +1,6 @@
+{
+    "port": "COM4",
+    "sketch": "SerialLED.ino",
+    "board": "arduino:avr:pro",
+    "configuration": "cpu=16MHzatmega328"
+}
