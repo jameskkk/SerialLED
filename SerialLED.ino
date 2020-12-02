@@ -9,6 +9,7 @@
 
 #include "Configure.h"
 #include "LEDUtil.h"
+#include "MP3Util.h"
 
 //-----------------------------------------------------------------------------
 // Global Variable Define
@@ -31,14 +32,13 @@ void disableLED();
  
 //-----------------------------------------------------------------------------
 void setup() {
-  // initialize serial:
-  Serial.begin(115200);
+  Serial.begin(115200);   // Initialize serial
 
   initStrip(); // Initialize WS2812B LED
+  initDFPlayer(); // Initialize DFPlayer
 }
 
 void loop() {
-  // print the string when a newline arrives:
   serialEvent();
 }
 
@@ -151,6 +151,28 @@ void serialEvent() {
       Serial.println();
       continue;
     }
+
+#ifdef MP3_PLAYER
+    //----Play the first mp3----
+    Serial.println(F("Play mp3..."));
+    switch (g_lightMode)
+    {
+    case 0:
+    case 1:
+      playWithID(1);
+      break;
+    case 2:
+      playWithID(2);
+      break;
+    case 3:
+      playWithID(1);
+      break;
+    case 4:
+    default:
+       playWithID(2);
+      break;
+    }
+#endif
   }
 }
 

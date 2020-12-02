@@ -6,6 +6,7 @@
 //-----------------------------------------------------------------------------
 #define DEBUG
 #define LED_LIGHT // LED display on/off
+#define MP3_PLAYER // MP3 player on/off
 
 //-----------------------------------------------------------------------------
 // Constant Variable Define
@@ -21,6 +22,8 @@
 #define NUM_METEORS 5      // Length of meteors
 #define INCREASE_BRIGHTNESS (256 / NUM_METEORS) // Meteor light delay time ( HSV )
 #define STAY_TIME 45                            // Meteor light stay time ( ms)
+
+#define SPEAKER_VOLUME 1 // The volume of speaker
 
 #define SERIAL_RESERVE 128 // define serail port reserve
 #define START_BYTE       0x1B
