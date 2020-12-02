@@ -94,6 +94,15 @@ void playWithID(int id)
 #endif
 }
 
+void setVolume(int volume)
+{
+  Serial.print(F("Set Volume: "));
+  Serial.print(volume);
+  Serial.println();
+  g_dfPlayer.volume(volume);
+}
+
+
 //-----------------------------------------------------------------------------
 void printDetail(uint8_t type, int value)
 {

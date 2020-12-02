@@ -6,6 +6,7 @@
 
 bool initDFPlayer();
 void playWithID(int id);
+void setVolume(int volume);
 void printDetail(uint8_t type, int value);
 
 #endif

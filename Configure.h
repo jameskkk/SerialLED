@@ -23,13 +23,14 @@
 #define INCREASE_BRIGHTNESS (256 / NUM_METEORS) // Meteor light delay time ( HSV )
 #define STAY_TIME 45                            // Meteor light stay time ( ms)
 
-#define SPEAKER_VOLUME 1 // The volume of speaker
+#define SPEAKER_VOLUME 20 // The volume of speaker
 
 #define SERIAL_RESERVE 128 // define serail port reserve
 #define START_BYTE       0x1B
 #define TRIGGER_BYTE     0x31
 #define TRIGGER_EX_BYTE  0x32
 #define TRIGGER_CUS_BYTE 0x33
+#define SET_VOLUME       0x34
 #define STOP_BYTE        0x30
 
 #endif

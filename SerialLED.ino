@@ -16,10 +16,13 @@
 //-----------------------------------------------------------------------------
 int g_lightMode = 0;
 int g_lightModeEx = 0;
+int g_MP3Count = 0;
 bool g_bRGB[3] = { false };
 char g_cRGB[3] = { 0 };
 bool isGetStartByte = false;
 bool isLEDCustomer = false;
+bool isSetVolume = false;
+bool isPlayMP3 = false;
 extern Adafruit_NeoPixel g_strip;
 
 //-----------------------------------------------------------------------------
@@ -74,6 +77,7 @@ void serialEvent() {
       delay(500);                       // delay 500ms
 
       setLED();
+      isPlayMP3 = true;
     }
     else if (isGetStartByte && inChar == TRIGGER_EX_BYTE) {
       isGetStartByte = false;
@@ -91,6 +95,20 @@ void serialEvent() {
       delay(500);                       // delay 500ms
 
       setLEDEx();
+      isPlayMP3 = true;
+    }
+    else if (isGetStartByte && inChar == SET_VOLUME) {
+      isSetVolume = true;
+      Serial.print(F("Receive SET_VOLUME: "));
+      Serial.print(inChar, HEX);
+      Serial.println();
+    }
+    else if (isSetVolume) {
+      int volume = (int)inChar;
+      if (volume > 30)
+        volume = 30;
+      setVolume(volume);
+      isSetVolume = false;
     }
     else if (isGetStartByte && inChar == TRIGGER_CUS_BYTE) {
       isLEDCustomer = true;
@@ -132,6 +150,7 @@ void serialEvent() {
             g_bRGB[i] = false;
             g_cRGB[i] = 0;
         }
+        isPlayMP3 = true;
       } else {
         Serial.println(F("Receive Error, disable LED..."));
         disableLED();
@@ -153,24 +172,39 @@ void serialEvent() {
     }
 
 #ifdef MP3_PLAYER
-    //----Play the first mp3----
-    Serial.println(F("Play mp3..."));
-    switch (g_lightMode)
+    if (isPlayMP3)
     {
-    case 0:
-    case 1:
-      playWithID(1);
-      break;
-    case 2:
-      playWithID(2);
-      break;
-    case 3:
-      playWithID(1);
-      break;
-    case 4:
-    default:
-       playWithID(2);
-      break;
+      isPlayMP3 = false;
+      //----Play the first mp3----
+      Serial.println(F("Play mp3..."));
+      g_MP3Count++;
+      if (g_MP3Count > 6)
+        g_MP3Count = 0;
+      switch (g_MP3Count)
+      {
+      case 0:
+      case 1:
+        playWithID(1);
+        break;
+      case 2:
+        playWithID(2);
+        break;
+      case 3:
+        playWithID(3);
+        break;
+      case 4:
+        playWithID(4);
+        break;
+      case 5:
+        playWithID(5);
+        break;
+      case 6:
+        playWithID(6);
+        break;
+      default:
+        playWithID(1);
+        break;
+      }
     }
 #endif
   }
